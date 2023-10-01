@@ -60,18 +60,22 @@ class Analysis_tab(QWidget, Ui_analisys_tab):
     def show_chart(self):
         expenses = []
         selected_categories = self.combo_box.get_checked_items()
+        if  len(selected_categories):
 
-        if "Wszystkie" in selected_categories:
-            selected_categories.pop(selected_categories.index("Wszystkie"))
 
-        for category in selected_categories:
-            expenses.extend(self.database.get_expenses_by_category_name_in_date_range(category, self.date_from.date().toPyDate().strftime("%Y-%m-%d"), self.date_to.date().toPyDate().strftime("%Y-%m-%d")))
+            if "Wszystkie" in selected_categories:
+                selected_categories.pop(selected_categories.index("Wszystkie"))
 
-        if self.is_pie_chart_set:
-            self.pie_chart.draw_chart(expenses)
-        elif self.is_stack_chart_set:
-            self.stack_chart.draw_chart(expenses)
-        
+            for category in selected_categories:
+                expenses.extend(self.database.get_expenses_by_category_name_in_date_range(category, self.date_from.date().toPyDate().strftime("%Y-%m-%d"), self.date_to.date().toPyDate().strftime("%Y-%m-%d")))
+            if len(expenses):
+
+
+                if self.is_pie_chart_set:
+                    self.pie_chart.draw_chart(expenses)
+                elif self.is_stack_chart_set:
+                    self.stack_chart.draw_chart(expenses)
+                
 
 
 
